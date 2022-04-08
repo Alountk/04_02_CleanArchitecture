@@ -26,7 +26,7 @@
             "WARNING16": "button at the bottom of this file.",
             "WARNING17": "*********************************************************************************",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Blog.WebUI/bin/Debug/<insert-target-framework-here>/<insert-project-name-here>.dll",
+            "program": "${workspaceFolder}/Blog.Api/bin/Debug/net6.0/Blog.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
