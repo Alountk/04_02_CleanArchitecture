@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dbup-core" Version="4.5.0" />
+    <PackageReference Include="dbup-mysql" Version="4.5.0" />
+    <PackageReference Include="dbup-postgresql" Version="4.5.0" />
+    <PackageReference Include="dbup-sqlserver" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.JSON" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <PackageReference Include="Npgsql" Version="6.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- <EmbeddedResource Include="SQLScripts/BeforeDeployment/MSSQL/*.sql" /> -->
+    <!-- <EmbeddedResource Include="SQLScripts/BeforeDeployment/MySQL/*.sql" /> -->
+    <EmbeddedResource Include="..\Blog.MigratorDB\SQLScripts\BeforeDeployment\PostgreSQL\*.sql" />
+    <!-- <EmbeddedResource Include="SQLScripts/Deployment/MSSQL/*.sql" />
+    <EmbeddedResource Include="SQLScripts/Deployment/MySQL/*.sql" /> -->
+    <EmbeddedResource Include="..\Blog.MigratorDB\SQLScripts\Deployment\PostgreSQL/*.sql" />
+    <!-- <EmbeddedResource Include="SQLScripts/PostDeployment/MSSQL/*.sql" />
+    <EmbeddedResource Include="SQLScripts/PostDeployment/MySQL/*.sql" /> -->
+    <EmbeddedResource Include="..\Blog.MigratorDB\SQLScripts\PostDeployment\PostgreSQL/*.sql" />
+  </ItemGroup>
+
+</Project>
