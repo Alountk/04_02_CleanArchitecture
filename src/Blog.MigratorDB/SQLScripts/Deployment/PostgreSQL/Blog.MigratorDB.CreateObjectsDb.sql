@@ -1,4 +1,4 @@
-CREATE TABLE blog.Users (
+CREATE TABLE blog.users (
     id uuid DEFAULT uuid_generate_v4 (),
     first_name varchar(50) NULL DEFAULT NULL,
     last_name varchar(50) NULL DEFAULT NULL,
@@ -14,75 +14,72 @@ CREATE TABLE blog.Users (
     CONSTRAINT UQ_blogUsers UNIQUE (id),
     CONSTRAINT UQ_blogUsers_email UNIQUE (email)
 );
--- CREATE TABLE blog.Posts (
---     id uuid DEFAULT uuid_generate_v4 (),
---     author_id BIGINT(20) NOT NULL,
---     parent_id BIGINT(20) NULL DEFAULT NULL,
---     title varchar(75) NOT NULL,
---     meta_title varchar(100) NULL,
---     slug varchar(100) NOT NULL,
---     summary TINYTEXT NULL,
---     published TINYINT(1) NOT NULL DEFAULT 0,
---     deleted bool NOT NULL DEFAULT false,
---     owner_id smallserial NOT NULL,
---     created_at timestamp NOT NULL DEFAULT NOW(),
---     updated_at timestamp NOT NULL DEFAULT NOW(),
---     published_at timestamp NOT NULL DEFAULT NOW(),
---     content LONGTEXT NULL DEFAULT NULL,
---     CONSTRAINT PK_blogPosts PRIMARY KEY (id),
---     CONSTRAINT UQ_blogPosts UNIQUE (id),
---     CONSTRAINT FK_blogPosts_author_id FOREIGN KEY (author_id) REFERENCES blog.Users (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
--- );
--- ALTER TABLE blog.Posts
+CREATE TABLE blog.posts (
+    id uuid DEFAULT uuid_generate_v4 (),
+    author_id uuid NOT NULL,
+    parent_id uuid NULL DEFAULT NULL,
+    title varchar(75) NOT NULL,
+    meta_title varchar(100) NULL,
+    slug varchar(100) NOT NULL,
+    summary TEXT NULL,
+    published bool NOT NULL DEFAULT false,
+    deleted bool NOT NULL DEFAULT false,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    updated_at timestamp NOT NULL DEFAULT NOW(),
+    published_at timestamp NOT NULL DEFAULT NOW(),
+    content TEXT NULL DEFAULT NULL,
+    CONSTRAINT PK_blogPosts PRIMARY KEY (id),
+    CONSTRAINT UQ_blogPosts UNIQUE (id),
+    CONSTRAINT FK_blogPosts_author_id FOREIGN KEY (author_id) REFERENCES blog.users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE TABLE blog.post_metas (
+    id uuid DEFAULT uuid_generate_v4 (),
+    post_id uuid NOT NULL,
+    meta_key varchar(100) NOT NULL,
+    meta_value TEXT NULL DEFAULT NULL,
+    CONSTRAINT PK_blogPostMeta PRIMARY KEY (id),
+    CONSTRAINT UQ_blogPostMeta UNIQUE (id),
+    CONSTRAINT FK_blogPostMeta_post FOREIGN KEY (post_id) REFERENCES blog.posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE TABLE blog.post_comments (
+    id uuid DEFAULT uuid_generate_v4 (),
+    post_id uuid NOT NULL,
+    parent_id uuid NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    published bool NOT NULL DEFAULT false,
+    created_at timestamp NOT NULL DEFAULT NOW(),
+    published_at timestamp NOT NULL DEFAULT NOW(),
+    content TEXT NULL DEFAULT NULL,
+    CONSTRAINT PK_blogPostComments PRIMARY KEY (id),
+    CONSTRAINT UQ_blogPostComments UNIQUE (id),
+    CONSTRAINT FK_blogPostComments_post FOREIGN KEY (post_id) REFERENCES blog.posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE TABLE blog.categories (
+    id uuid DEFAULT uuid_generate_v4 (),
+    parent_id uuid NULL DEFAULT NULL,
+    title varchar(100) NOT NULL,
+    meta_title varchar(100) NULL,
+    slug varchar(100) NOT NULL,
+    content TEXT NULL DEFAULT NULL,
+    CONSTRAINT PK_blogCategory PRIMARY KEY (id),
+    CONSTRAINT UQ_blogCategory UNIQUE (id)
+);
+CREATE TABLE blog.post_categories (
+    id uuid DEFAULT uuid_generate_v4 (),
+    category_id uuid NOT NULL,
+    CONSTRAINT PK_blogPostCategory PRIMARY KEY (id),
+    CONSTRAINT UQ_blogPostCategory UNIQUE (id),
+    CONSTRAINT FK_blogPostCategory_category FOREIGN KEY (category_id) REFERENCES blog.categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+-- ALTER TABLE blog.posts
 -- ADD INDEX 'idx_post_parent' (parent_id);
--- ALTER TABLE blog.Posts
--- ADD CONSTRAINT 'fk_post_parent' FOREIGN KEY (parent_id) REFERENCES blog.Posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
--- CREATE TABLE blog.PostMetas (
---     id uuid DEFAULT uuid_generate_v4 (),
---     post_id BIGINT(20) NOT NULL,
---     meta_key varchar(100) NOT NULL,
---     meta_value LONGTEXT NULL DEFAULT NULL,
---     CONSTRAINT PK_blogPostMeta PRIMARY KEY (id),
---     CONSTRAINT UQ_blogPostMeta UNIQUE (id),
---     CONSTRAINT FK_blogPostMeta_post FOREIGN KEY (post_id) REFERENCES blog.Posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION
--- );
--- CREATE TABLE blog.PostComments (
---     id uuid DEFAULT uuid_generate_v4 (),
---     post_id BIGINT(20) NOT NULL,
---     parent_id BIGINT(20) NOT NULL,
---     title VARCHAR(100) NOT NULL,
---     published TINYINT(1) NOT NULL DEFAULT 0,
---     created_at timestamp NOT NULL DEFAULT NOW(),
---     published_at timestamp NOT NULL DEFAULT NOW(),
---     content LONGTEXT NULL DEFAULT NULL,
---     CONSTRAINT PK_blogPostComments PRIMARY KEY (id),
---     CONSTRAINT UQ_blogPostComments UNIQUE (id),
---     CONSTRAINT FK_blogPostComments_post FOREIGN KEY (post_id) REFERENCES blog.Posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
---     CONSTRAINT FK_blogPostComments_author FOREIGN KEY (author_id) REFERENCES blog.Users (id) ON DELETE NO ACTION ON UPDATE NO ACTION
--- );
--- ALTER TABLE blog.PostComments
+-- ALTER TABLE blog.posts
+-- ADD CONSTRAINT 'fk_post_parent' FOREIGN KEY (parent_id) REFERENCES blog.posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ALTER TABLE blog.post_comments
 -- ADD INDEX 'idx_comment_parent' (parent_id);
--- ALTER TABLE blog.PostComments
--- ADD CONSTRAINT 'fk_comment_parent' FOREIGN KEY (parent_id) REFERENCES blog.PostComments (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
--- CREATE TABLE blog.Categories (
---     id uuid DEFAULT uuid_generate_v4 (),
---     parent_id BIGINT(20) NULL DEFAULT NULL,
---     title varchar(100) NOT NULL,
---     meta_title varchar(100) NULL,
---     slug varchar(100) NOT NULL,
---     content LONGTEXT NULL DEFAULT NULL,
---     CONSTRAINT PK_blogCategory PRIMARY KEY (id),
---     CONSTRAINT UQ_blogCategory UNIQUE (id)
--- );
--- ALTER TABLE blog.Categories
+-- ALTER TABLE blog.post_comments
+-- ADD CONSTRAINT 'fk_comment_parent' FOREIGN KEY (parent_id) REFERENCES blog.post_comments (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ALTER TABLE blog.categories
 -- ADD INDEX 'idx_category_parent' (parent_id);
--- ALTER TABLE blog.Categories
--- ADD CONSTRAINT 'fk_category_parent' FOREIGN KEY (parent_id) REFERENCES blog.Categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
--- CREATE TABLE blog.PostCategories (
---     id uuid DEFAULT uuid_generate_v4 (),
---     category_id BIGINT(20) NOT NULL,
---     CONSTRAINT PK_blogPostCategory PRIMARY KEY (id),
---     CONSTRAINT UQ_blogPostCategory UNIQUE (id),
---     CONSTRAINT FK_blogPostCategory_post FOREIGN KEY (post_id) REFERENCES blog.Posts (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
---     CONSTRAINT FK_blogPostCategory_category FOREIGN KEY (category_id) REFERENCES blog.Categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION
--- );
+-- ALTER TABLE blog.categories
+-- ADD CONSTRAINT 'fk_category_parent' FOREIGN KEY (parent_id) REFERENCES blog.categories (id) ON DELETE NO ACTION ON UPDATE NO ACTION;
