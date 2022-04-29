@@ -1,5 +1,7 @@
 using System;
+
 using DbUp;
+
 using Npgsql;
 
 namespace Blog.MigratorDB
