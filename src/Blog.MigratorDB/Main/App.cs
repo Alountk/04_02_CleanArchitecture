@@ -36,18 +36,6 @@ namespace Blog.MigratorDB
                     EnsureDatabase.For.PostgresqlDatabase(connectionString);
 
                     /* Configuramos el motor de migración de Base de Datos de DbUp. */
-                    // var upgradeEngineBuilder = DeployChanges.To.SqlDatabase(connectionString, null)
-                    // var upgradeEngineBuilder = DeployChanges.To.PostgresqlDatabase(connectionString, null)
-                    //                                         // Pre-deployment scripts: configurarlos para que siempre se ejecuten en el primer grupo.
-                    //                                         .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), x => x.StartsWith($"Blog.MigratorDB.SQLScripts.BeforeDeployment."), new SqlScriptOptions { ScriptType = ScriptType.RunOnce, RunGroupOrder = 0 })
-                    //                                         // Main Deployment scripts: se ejectan solo una vez y corren en el segundo grupo.
-                    //                                         // .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), x => x.StartsWith($"Blog.MigratorDB.SQLScripts.Deployment."), new SqlScriptOptions { ScriptType = ScriptType.RunOnce, RunGroupOrder = 1 })
-                    //                                         // Post deployment scripts: siempre se ejecutan estos scripts después de que todo se haya implementado.
-                    //                                         // .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), x => x.StartsWith($"Blog.MigratorDB.SQLScripts.PostDeployment."), new SqlScriptOptions { ScriptType = ScriptType.RunAlways, RunGroupOrder = 2 })
-                    //                                         // De forma predeterminada, todos los scripts se ejecutan en la misma transacción.
-                    //                                         .WithTransactionPerScript()
-                    //                                         // Colocar el log en la consola.
-                    //                                         .LogToConsole();
                     UpgradeEngine upgradeEngine = DeployChanges
                         .To
                         .PostgresqlDatabase(connectionString)
@@ -58,45 +46,23 @@ namespace Blog.MigratorDB
                         .WithTransactionPerScript()
                         .LogToConsole()
                         .Build();
-
-                    var result = upgradeEngine.PerformUpgrade();
-                    if (!result.Successful)
+                    if (upgradeEngine.IsUpgradeRequired())
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(result.Error);
-                        Console.ResetColor();
+                        /* Ejecutamos la migración de Base de Datos. */
+                        var result = upgradeEngine.PerformUpgrade();
+                        if (!result.Successful)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine(result.Error);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Migración de Base de Datos completada con éxito.");
+                            Console.ResetColor();
+                        }
                     }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Migración de Base de Datos completada con éxito.");
-                        Console.ResetColor();
-                    }
-                    /* Construimos el proceso de migración. */
-                    // Console.WriteLine($"Aplicando cambios en Base de Datos...");
-                    // var upgrader = upgradeEngineBuilder.Build();
-
-                    // if (upgrader.IsUpgradeRequired())
-                    // {
-                    //     var result = upgrader.PerformUpgrade();
-
-                    //     /* Mostrar el resultado. */
-                    //     if (result.Successful)
-                    //     {
-                    //         Console.ForegroundColor = ConsoleColor.Green;
-                    //         Console.WriteLine($"Ejecución satisfactoria de la migración a Base de Datos.");
-                    //     }
-                    //     else
-                    //     {
-                    //         Console.ForegroundColor = ConsoleColor.Red;
-                    //         Console.WriteLine($"La migración de Base de Datos falló. No se aplicaron cambios. Revise el siguiente mensaje de error.");
-                    //         Console.WriteLine(result.Error);
-                    //     }
-
-                    //     Console.ResetColor();
-                    // }
-
-                    // Thread.Sleep(500);
                 }).ConfigureAwait(false);
             }
             catch (Exception oEx)
