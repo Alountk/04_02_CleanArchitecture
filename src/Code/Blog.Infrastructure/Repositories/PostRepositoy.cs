@@ -1,29 +1,25 @@
 using Blog.Core.Entities;
+using Blog.Core.Interfaces;
+using Blog.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Repositories
 {
-    public class PostRepository
+    public class PostRepository : IPostRepository
     {
+        private readonly BlogDbContext _context;
+        public PostRepository(BlogDbContext context) => _context = context;
 
-        public IEnumerable<Posts> GetAllPosts()
+        public Task<List<Post>> GetAllPostsAsync()
         {
-            var _posts = Enumerable.Range(1, 50).Select(x => new Posts
-            {
-                id = Guid.NewGuid(),
-                author_id = Guid.NewGuid(),
-                parent_id = Guid.NewGuid(),
-                title = "Post " + x,
-                meta_title = "Post " + x,
-                slug = "post-" + x,
-                summary = "Post " + x,
-                published = true,
-                deleted = false,
-                created_at = DateTime.Now,
-                updated_at = DateTime.Now,
-                published_at = DateTime.Now,
-                content = "Post " + x
-            });
+            var _posts = _context.Posts.ToListAsync();
             return _posts;
+        }
+
+        public Task<Post> GetPostByIdAsync(Guid postId)
+        {
+            var _user = _context.Posts.FirstOrDefaultAsync(u => u.Id == postId);
+            return _user;
         }
     }
 }

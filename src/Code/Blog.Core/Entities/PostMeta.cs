@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Blog.Infrastructure.temp
+namespace Blog.Core.Entities
 {
     public partial class PostMeta
     {

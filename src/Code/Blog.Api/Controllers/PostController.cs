@@ -1,4 +1,5 @@
-using Blog.Infrastructure.Repositories;
+using System.Threading.Tasks;
+using Blog.Core.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,13 @@ namespace Blog.Api.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
+        private readonly IPostRepository _postRepository;
+        public PostController(IPostRepository postRepository) => _postRepository = postRepository;
+
         [HttpGet]
-        public IActionResult GetPosts()
+        public IActionResult GetAllPosts()
         {
-            var _posts = new PostRepository().GetAllPosts();
+            var _posts = _postRepository.GetAllPostsAsync();
             return Ok(_posts);
         }
     }
