@@ -7,9 +7,9 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Blog.MigratorDB/Blog.MigratorDB.csproj",
+                "${workspaceFolder}/src/Code/Blog.Api/Blog.Api.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary",
             ],
             "problemMatcher": "$msCompile"
         },
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Blog.MigratorDB/Blog.MigratorDB.csproj",
+                "${workspaceFolder}/src/Code/Blog.Api/Blog.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,8 +32,9 @@
             "args": [
                 "watch",
                 "run",
-                "--project",
-                "${workspaceFolder}/src/Blog.MigratorDB/Blog.MigratorDB.csproj"
+                "${workspaceFolder}/src/Code/Blog.Api/Blog.Api.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Blog.Core.Interfaces;
 
-using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
 {
@@ -10,12 +10,15 @@ namespace Blog.Api.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
-        public PostController(IPostRepository postRepository) => _postRepository = postRepository;
+        public PostController(IPostRepository postRepository)
+        {
+            _postRepository = postRepository;
+        }
 
         [HttpGet]
-        public IActionResult GetAllPosts()
+        public async Task<IActionResult> GetAllPosts()
         {
-            var _posts = _postRepository.GetAllPostsAsync();
+            var _posts = await _postRepository.GetAllPostsAsync();
             return Ok(_posts);
         }
     }

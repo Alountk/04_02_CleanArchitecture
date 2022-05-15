@@ -12,7 +12,7 @@
     "Blog.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/post",
       "applicationUrl": "http://localhost:7070",
       "environmentVariables": {

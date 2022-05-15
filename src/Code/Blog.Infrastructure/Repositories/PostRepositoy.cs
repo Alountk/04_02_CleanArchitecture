@@ -8,18 +8,21 @@ namespace Blog.Infrastructure.Repositories
     public class PostRepository : IPostRepository
     {
         private readonly BlogDbContext _context;
-        public PostRepository(BlogDbContext context) => _context = context;
-
-        public Task<List<Post>> GetAllPostsAsync()
+        public PostRepository(BlogDbContext context)
         {
-            var _posts = _context.Posts.ToListAsync();
+            _context = context;
+        }
+
+        public async Task<List<Post>> GetAllPostsAsync()
+        {
+            List<Post> _posts = await _context.Posts.ToListAsync();
             return _posts;
         }
 
-        public Task<Post> GetPostByIdAsync(Guid postId)
+        public async Task<Post?> GetPostByIdAsync(Guid postId)
         {
-            var _user = _context.Posts.FirstOrDefaultAsync(u => u.Id == postId);
-            return _user;
+            Post? _post = await _context.Posts.FirstOrDefaultAsync(u => u.Id == postId);
+            return _post;
         }
     }
 }
