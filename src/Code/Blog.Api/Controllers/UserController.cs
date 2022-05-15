@@ -21,6 +21,13 @@ namespace Blog.Api.Controllers
             var _users = await _userRepository.GetAllUsersAsync();
             return Ok(_users);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            var _user = await _userRepository.GetUserByIdAsync(id);
+            return Ok(_user);
+        }
     }
 
 }

@@ -29,30 +29,30 @@ namespace Blog.Infrastructure.Data
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
 
-            // modelBuilder.Entity<Category>(entity =>
-            // {
-            //     entity.ToTable("categories", "blog");
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("categories", "blog");
 
-            //     entity.Property(e => e.Id)
-            //         .HasColumnName("id")
-            //         .HasDefaultValueSql("uuid_generate_v4()");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-            //     entity.Property(e => e.Content).HasColumnName("content");
+                entity.Property(e => e.Content).HasColumnName("content");
 
-            //     entity.Property(e => e.MetaTitle)
-            //         .HasMaxLength(100)
-            //         .HasColumnName("meta_title");
+                entity.Property(e => e.MetaTitle)
+                    .HasMaxLength(100)
+                    .HasColumnName("meta_title");
 
-            //     entity.Property(e => e.ParentId).HasColumnName("parent_id");
+                entity.Property(e => e.ParentId).HasColumnName("parent_id");
 
-            //     entity.Property(e => e.Slug)
-            //         .HasMaxLength(100)
-            //         .HasColumnName("slug");
+                entity.Property(e => e.Slug)
+                    .HasMaxLength(100)
+                    .HasColumnName("slug");
 
-            //     entity.Property(e => e.Title)
-            //         .HasMaxLength(100)
-            //         .HasColumnName("title");
-            // });
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
+                    .HasColumnName("title");
+            });
 
             modelBuilder.Entity<Post>(entity =>
             {
@@ -108,99 +108,81 @@ namespace Blog.Infrastructure.Data
                     .HasConstraintName("fk_blogposts_author_id");
             });
 
-            // modelBuilder.Entity<PostCategory>(entity =>
-            // {
-            //     entity.ToTable("post_categories", "blog");
-
-            //     entity.Property(e => e.Id)
-            //         .HasColumnName("id")
-            //         .HasDefaultValueSql("uuid_generate_v4()");
-
-            //     entity.Property(e => e.CategoryId).HasColumnName("category_id");
-
-            //     entity.HasOne(d => d.Category)
-            //         .WithMany(p => p.PostCategories)
-            //         .HasForeignKey(d => d.CategoryId)
-            //         .OnDelete(DeleteBehavior.ClientSetNull)
-            //         .HasConstraintName("fk_blogpostcategory_category");
-            // });
-
-            // modelBuilder.Entity<PostComment>(entity =>
-            // {
-            //     entity.ToTable("post_comments", "blog");
-
-            //     entity.Property(e => e.Id)
-            //         .HasColumnName("id")
-            //         .HasDefaultValueSql("uuid_generate_v4()");
-
-            //     entity.Property(e => e.Content).HasColumnName("content");
-
-            //     entity.Property(e => e.CreatedAt)
-            //         .HasColumnType("timestamp without time zone")
-            //         .HasColumnName("created_at")
-            //         .HasDefaultValueSql("now()");
-
-            //     entity.Property(e => e.ParentId).HasColumnName("parent_id");
-
-            //     entity.Property(e => e.PostId).HasColumnName("post_id");
-
-            //     entity.Property(e => e.Published).HasColumnName("published");
-
-            //     entity.Property(e => e.PublishedAt)
-            //         .HasColumnType("timestamp without time zone")
-            //         .HasColumnName("published_at")
-            //         .HasDefaultValueSql("now()");
-
-            //     entity.Property(e => e.Title)
-            //         .HasMaxLength(100)
-            //         .HasColumnName("title");
-
-            //     entity.HasOne(d => d.Post)
-            //         .WithMany(p => p.PostComments)
-            //         .HasForeignKey(d => d.PostId)
-            //         .OnDelete(DeleteBehavior.ClientSetNull)
-            //         .HasConstraintName("fk_blogpostcomments_post");
-            // });
-
-            // modelBuilder.Entity<PostMeta>(entity =>
-            // {
-            //     entity.ToTable("post_metas", "blog");
-
-            //     entity.Property(e => e.Id)
-            //         .HasColumnName("id")
-            //         .HasDefaultValueSql("uuid_generate_v4()");
-
-            //     entity.Property(e => e.MetaKey)
-            //         .HasMaxLength(100)
-            //         .HasColumnName("meta_key");
-
-            //     entity.Property(e => e.MetaValue).HasColumnName("meta_value");
-
-            //     entity.Property(e => e.PostId).HasColumnName("post_id");
-
-            //     entity.HasOne(d => d.Post)
-            //         .WithMany(p => p.PostMeta)
-            //         .HasForeignKey(d => d.PostId)
-            //         .OnDelete(DeleteBehavior.ClientSetNull)
-            //         .HasConstraintName("fk_blogpostmeta_post");
-            // });
-
-            modelBuilder.Entity<Schemaversion>(entity =>
+            modelBuilder.Entity<PostCategory>(entity =>
             {
-                entity.HasKey(e => e.Schemaversionsid)
-                    .HasName("PK_schemaversions_Id");
+                entity.ToTable("post_categories", "blog");
 
-                entity.ToTable("schemaversions");
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("uuid_generate_v4()");
 
-                entity.Property(e => e.Schemaversionsid).HasColumnName("schemaversionsid");
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
-                entity.Property(e => e.Applied)
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.PostCategories)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_blogpostcategory_category");
+            });
+
+            modelBuilder.Entity<PostComment>(entity =>
+            {
+                entity.ToTable("post_comments", "blog");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("uuid_generate_v4()");
+
+                entity.Property(e => e.Content).HasColumnName("content");
+
+                entity.Property(e => e.CreatedAt)
                     .HasColumnType("timestamp without time zone")
-                    .HasColumnName("applied");
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.Scriptname)
-                    .HasMaxLength(255)
-                    .HasColumnName("scriptname");
+                entity.Property(e => e.ParentId).HasColumnName("parent_id");
+
+                entity.Property(e => e.PostId).HasColumnName("post_id");
+
+                entity.Property(e => e.Published).HasColumnName("published");
+
+                entity.Property(e => e.PublishedAt)
+                    .HasColumnType("timestamp without time zone")
+                    .HasColumnName("published_at")
+                    .HasDefaultValueSql("now()");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
+                    .HasColumnName("title");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostComments)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_blogpostcomments_post");
+            });
+
+            modelBuilder.Entity<PostMeta>(entity =>
+            {
+                entity.ToTable("post_metas", "blog");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("uuid_generate_v4()");
+
+                entity.Property(e => e.MetaKey)
+                    .HasMaxLength(100)
+                    .HasColumnName("meta_key");
+
+                entity.Property(e => e.MetaValue).HasColumnName("meta_value");
+
+                entity.Property(e => e.PostId).HasColumnName("post_id");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostMeta)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_blogpostmeta_post");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -254,10 +236,6 @@ namespace Blog.Infrastructure.Data
                     .HasMaxLength(50)
                     .HasColumnName("username");
             });
-
-            OnModelCreatingPartial(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

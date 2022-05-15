@@ -5,11 +5,11 @@ namespace Blog.Core.Entities
 {
     public partial class Post
     {
-        // public Post()
-        // {
-        //     PostComments = new HashSet<PostComment>();
-        //     PostMeta = new HashSet<PostMeta>();
-        // }
+        public Post()
+        {
+            PostComments = new HashSet<PostComment>();
+            PostMeta = new HashSet<PostMeta>();
+        }
 
         public Guid Id { get; set; }
         public Guid AuthorId { get; set; }
@@ -26,7 +26,7 @@ namespace Blog.Core.Entities
         public string? Content { get; set; }
 
         public virtual User Author { get; set; } = null!;
-        // public virtual ICollection<PostComment> PostComments { get; set; }
-        // public virtual ICollection<PostMeta> PostMeta { get; set; }
+        public virtual ICollection<PostComment> PostComments { get; set; }
+        public virtual ICollection<PostMeta> PostMeta { get; set; }
     }
 }
