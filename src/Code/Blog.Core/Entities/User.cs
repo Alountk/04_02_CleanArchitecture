@@ -5,11 +5,6 @@ namespace Blog.Core.Entities
 {
     public partial class User
     {
-        public User()
-        {
-            Posts = new HashSet<Post>();
-        }
-
         public Guid Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
@@ -21,7 +16,5 @@ namespace Blog.Core.Entities
         public DateTime RegisteredAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? LastLogin { get; set; }
-
-        public virtual ICollection<Post> Posts { get; set; }
     }
 }

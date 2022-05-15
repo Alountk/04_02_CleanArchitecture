@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Blog.Infrastructure.Data;
 using Blog.Infrastructure.Repositories;
 using Blog.Core.Interfaces;
+using Blog.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +18,7 @@ builder.Services.AddDbContext<BlogDbContext>(x => x.UseNpgsql(connectionString))
 
 builder.Services.AddControllers();
 
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IPostRepository, PostRepository>();
+IoC.AddDependency(builder.Services);
 
 var app = builder.Build();
 

@@ -25,7 +25,7 @@ namespace Blog.Core.Entities
         public DateTime PublishedAt { get; set; }
         public string? Content { get; set; }
 
-        public virtual User Author { get; set; } = null!;
+        // public virtual User Author { get; set; } = null!;
         public virtual ICollection<PostComment> PostComments { get; set; }
         public virtual ICollection<PostMeta> PostMeta { get; set; }
     }

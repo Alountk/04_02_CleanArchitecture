@@ -13,6 +13,12 @@ namespace Blog.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task AddPostAsync(Post post)
+        {
+            _context.Posts.AddAsync(post);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<Post>> GetAllPostsAsync()
         {
             List<Post> _posts = await _context.Posts.ToListAsync();

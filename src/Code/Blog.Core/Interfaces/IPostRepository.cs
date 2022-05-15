@@ -6,5 +6,6 @@ namespace Blog.Core.Interfaces
     {
         Task<List<Post>> GetAllPostsAsync();
         Task<Post?> GetPostByIdAsync(Guid postId);
+        Task AddPostAsync(Post post);
     }
 }
