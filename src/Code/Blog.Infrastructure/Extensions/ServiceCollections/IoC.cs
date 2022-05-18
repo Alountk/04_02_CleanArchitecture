@@ -1,7 +1,8 @@
 using Blog.Core.Interfaces;
 using Blog.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Blog.Api.Middleware
+namespace Blog.Infrastructure.Extensions.ServiceCollections
 {
     public static class IoC
     {
