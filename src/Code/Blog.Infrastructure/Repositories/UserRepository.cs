@@ -13,6 +13,13 @@ namespace Blog.Infrastructure.Repositories
         {
             _context = context;
         }
+
+        public async Task AddUserAsync(User user)
+        {
+            _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<User>> GetAllUsersAsync()
         {
             List<User> _users = await _context.Users.ToListAsync();

@@ -23,6 +23,13 @@ namespace Blog.Api.Controllers
             return Ok(_posts);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPostById(Guid id)
+        {
+            var _post = await _postRepository.GetPostByIdAsync(id);
+            return Ok(_post);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddPost(PostDTO post)
         {
@@ -42,6 +49,9 @@ namespace Blog.Api.Controllers
                 PublishedAt = DateTime.Now,
                 Content = post.Content
             };
+
+            post.Id = entitie.Id;
+
             await _postRepository.AddPostAsync(entitie);
             return Ok(post);
         }
