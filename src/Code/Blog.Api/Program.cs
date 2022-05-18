@@ -1,14 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Blog.Infrastructure.Data;
-using Blog.Infrastructure.Repositories;
-using Blog.Core.Interfaces;
 using Blog.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+        options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+        options.UseCamelCasing(false);
+    }
+);
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,7 +20,6 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("AppDb");
 builder.Services.AddDbContext<BlogDbContext>(x => x.UseNpgsql(connectionString));
 
-builder.Services.AddControllers();
 
 IoC.AddDependency(builder.Services);
 
