@@ -1,7 +1,10 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
+using FluentValidation.AspNetCore;
+
 using Blog.Infrastructure.Filters;
+
 namespace Blog.Infrastructure.Extensions.ServiceCollections
 {
     public static class CtrlCfg
@@ -23,7 +26,10 @@ namespace Blog.Infrastructure.Extensions.ServiceCollections
                     options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
                     options.UseCamelCasing(false);
                 }
-            );
+            ).AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            });
             return services;
         }
     }

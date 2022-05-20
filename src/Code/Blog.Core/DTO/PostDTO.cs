@@ -1,4 +1,4 @@
-namespace Blog.Api.DTO
+namespace Blog.Core.DTO
 {
     public class PostDTO
     {

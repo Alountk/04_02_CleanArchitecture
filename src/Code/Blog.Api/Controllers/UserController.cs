@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Core.Interfaces;
 using Blog.Core.Entities;
-using Blog.Api.DTO;
+using Blog.Core.DTO;
 
 namespace Blog.Api.Controllers
 {
