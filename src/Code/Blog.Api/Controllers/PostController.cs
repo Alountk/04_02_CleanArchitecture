@@ -31,7 +31,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPost(PostDTO post)
+        public async Task<IActionResult> AddPost(CreatePostDTO post)
         {
             Post entitie = new Post
             {

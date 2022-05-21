@@ -1,16 +1,12 @@
-﻿using Blog.Core.Entities.Base;
-
-namespace Blog.Core.Entities
+namespace Blog.Core.DTO
 {
-    public partial class User : EntityBase<int>
+    public class CreateUserDTO
     {
+        public Guid Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string Email { get; set; } = null!;
         public string Username { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
-        public bool IsAdmin { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime? LastLogin { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(UserDTO user)
+        public async Task<IActionResult> AddUser(CreateUserDTO user)
         {
             User entitie = new User
             {
