@@ -1,5 +1,5 @@
 using Blog.Core.Entities;
-using Blog.Core.Interfaces;
+using Blog.Core.Interfaces.Repository;
 using Blog.Infrastructure.Data;
 
 using Microsoft.EntityFrameworkCore;

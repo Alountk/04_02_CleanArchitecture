@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Blog.Core.Entities;
 
-namespace Blog.Infrastructure.Data
+namespace Blog.Infrastructure.Persistence.Data
 {
     public partial class BlogDbContext : DbContext
     {

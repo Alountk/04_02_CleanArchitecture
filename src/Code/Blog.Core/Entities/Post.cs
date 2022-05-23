@@ -2,7 +2,7 @@
 
 namespace Blog.Core.Entities
 {
-    public partial class Post : EntityBase<int>
+    public partial class Post : EntityBase<Guid>
     {
         public Post()
         {

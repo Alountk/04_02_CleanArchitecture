@@ -2,7 +2,7 @@
 
 namespace Blog.Core.Entities
 {
-    public partial class User : EntityBase<int>
+    public partial class User : EntityBase<Guid>
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

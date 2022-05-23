@@ -2,7 +2,7 @@ using Blog.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Blog.Infrastructure.Data.Configurations
+namespace Blog.Infrastructure.Persistence.Data.Configurations
 {
     public class PostMetaConfiguration : IEntityTypeConfiguration<PostMeta>
     {
