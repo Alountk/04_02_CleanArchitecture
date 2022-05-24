@@ -43,7 +43,7 @@ namespace Blog.Infrastructure.Data.Configurations
                 .HasMaxLength(32)
                 .HasColumnName("password_hash");
 
-            builder.Property(e => e.CreatedAt)
+            builder.Property(e => e.RegisteredAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("registered_at")
                 .HasDefaultValueSql("now()");

@@ -1,14 +1,17 @@
-﻿using Blog.Core.Entities.Base;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Blog.Core.Entities
 {
-    public partial class Post : EntityBase<int>
+    public partial class Post
     {
         public Post()
         {
             PostComments = new HashSet<PostComment>();
             PostMeta = new HashSet<PostMeta>();
         }
+
+        public Guid Id { get; set; }
         public Guid AuthorId { get; set; }
         public Guid? ParentId { get; set; }
         public string Title { get; set; } = null!;
@@ -17,6 +20,8 @@ namespace Blog.Core.Entities
         public string? Summary { get; set; }
         public bool Published { get; set; }
         public bool Deleted { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public DateTime PublishedAt { get; set; }
         public string? Content { get; set; }
 
