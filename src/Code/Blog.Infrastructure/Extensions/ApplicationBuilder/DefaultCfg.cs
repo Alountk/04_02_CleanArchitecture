@@ -18,6 +18,7 @@ namespace Blog.Infrastructure.Extensions.ApplicationBuilder
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

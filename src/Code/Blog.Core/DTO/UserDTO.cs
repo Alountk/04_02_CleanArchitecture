@@ -7,6 +7,8 @@ namespace Blog.Core.DTO
         public string? LastName { get; set; }
         public string Email { get; set; } = null!;
         public string Username { get; set; } = null!;
-        public string PasswordHash { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public string? PasswordHash { get; set; }
+        public string? PasswordSalt { get; set; }
     }
 }

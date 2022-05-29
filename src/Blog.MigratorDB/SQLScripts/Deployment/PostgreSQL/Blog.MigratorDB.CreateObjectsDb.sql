@@ -5,6 +5,7 @@ CREATE TABLE blog.users (
     email varchar(50) NOT NULL,
     username varchar(50) NOT NULL,
     password_hash varchar(32) NOT NULL,
+    password_salt varchar(32) NOT NULL,
     is_admin bool NOT NULL,
     is_active bool NOT NULL,
     registered_at timestamp NOT NULL DEFAULT NOW(),
