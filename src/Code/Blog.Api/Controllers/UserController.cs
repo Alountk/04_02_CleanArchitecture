@@ -33,6 +33,11 @@ namespace Blog.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddUser(UserDTO user)
         {
+            var userExist = await _userRepository.GetUserByUsernameAsync(user.Username);
+            if (userExist != null)
+            {
+                return BadRequest("User already exist");
+            }
             User entitie = new User
             {
                 Id = Guid.NewGuid(),
@@ -40,7 +45,8 @@ namespace Blog.Api.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Username = user.Username,
-                PasswordHash = user.PasswordHash,
+                Password = user.Password,
+                PasswordSalt = "blahblah",
                 IsAdmin = false,
                 IsActive = true,
                 RegisteredAt = DateTime.Now,

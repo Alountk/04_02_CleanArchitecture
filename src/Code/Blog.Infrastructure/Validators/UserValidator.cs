@@ -17,9 +17,9 @@ namespace Blog.Infrastructure.Validators
                                     .NotEmpty().WithMessage("Username cannot be empty")
                                     .Length(1, 100).WithMessage("Username must be between 1 and 100 characters");
             RuleFor(x => x.Password).Cascade(CascadeMode.Stop)
-                                        .NotNull().WithMessage("PasswordHash is required")
-                                        .NotEmpty().WithMessage("PasswordHash cannot be empty")
-                                        .Length(1, 100).WithMessage("PasswordHash must be between 1 and 100 characters");
+                                        .NotNull().WithMessage("Password is required")
+                                        .NotEmpty().WithMessage("Password cannot be empty")
+                                        .Length(1, 100).WithMessage("Password must be between 1 and 100 characters");
         }
     }
 }

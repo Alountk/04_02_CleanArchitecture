@@ -27,7 +27,8 @@ namespace Blog.MigratorDB
                 await Task.Run(() =>
                 {
                     /* Cadena de conexión a la Base de Datos tomada desde el archivo AppConfig.json. */
-                    var connectionString = _settings.ConnectionStringPostgreSQLServer;
+                    // var connectionString = _settings.ConnectionStringPostgreSQLServer;
+                    var connectionString = _settings.AWS_RDS;
 
                     /* Drop de la Base de datos */
                     // DropDatabase.For.PostgresqlDatabase(connectionString);

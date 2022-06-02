@@ -39,9 +39,13 @@ namespace Blog.Infrastructure.Data.Configurations
                 .HasColumnName("last_name")
                 .HasDefaultValueSql("NULL::character varying");
 
-            builder.Property(e => e.PasswordHash)
-                .HasMaxLength(32)
-                .HasColumnName("password_hash");
+            builder.Property(e => e.Password)
+                .HasMaxLength(50)
+                .HasColumnName("password");
+
+            builder.Property(e => e.PasswordSalt)
+                .HasMaxLength(50)
+                .HasColumnName("password_salt");
 
             builder.Property(e => e.RegisteredAt)
                 .HasColumnType("timestamp without time zone")

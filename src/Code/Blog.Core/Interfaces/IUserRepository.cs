@@ -6,6 +6,7 @@ namespace Blog.Core.Interfaces
     {
         Task<List<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(Guid userId);
+        Task<User?> GetUserByUsernameAsync(string username);
         Task AddUserAsync(User user);
     }
 }

@@ -31,5 +31,11 @@ namespace Blog.Infrastructure.Repositories
             User? _user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return _user;
         }
+
+        public async Task<User?> GetUserByUsernameAsync(string username)
+        {
+            User? _user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return _user;
+        }
     }
 }

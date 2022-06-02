@@ -8,5 +8,6 @@ namespace Blog.MigratorDB
         public string ConnectionStringSQLServer { get; set; }
         public string ConnectionStringMySQLServer { get; set; }
         public string ConnectionStringPostgreSQLServer { get; set; }
+        public string AWS_RDS { get; set; }
     }
 }

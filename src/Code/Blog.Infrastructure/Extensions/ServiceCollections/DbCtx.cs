@@ -10,7 +10,8 @@ namespace Blog.Infrastructure.Extensions.ServiceCollections
     {
         public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<BlogDbContext>(x => x.UseNpgsql(configuration.GetConnectionString("AppDb")));
+            // services.AddDbContext<BlogDbContext>(x => x.UseNpgsql(configuration.GetConnectionString("AppDb")));
+            services.AddDbContext<BlogDbContext>(x => x.UseNpgsql(configuration.GetConnectionString("AWS_RDS")));
             return services;
         }
     }
