@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Blog.Core.Interfaces;
 using Blog.Core.DTO;
 using Blog.Core.Entities;
@@ -8,6 +8,7 @@ namespace Blog.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PostController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
