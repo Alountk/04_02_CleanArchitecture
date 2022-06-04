@@ -19,7 +19,6 @@ namespace Blog.Infrastructure.Services
         public string GenerateToken(DateTime actualDate, User user, TimeSpan validateTime)
         {
             var _expirationDate = actualDate.Add(validateTime);
-            //Configuramos las claims
             var _claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Name, $"{user.FirstName} {user.LastName}"),
