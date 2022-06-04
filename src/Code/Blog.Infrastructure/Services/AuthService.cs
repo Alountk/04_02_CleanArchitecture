@@ -18,38 +18,53 @@ namespace Blog.Infrastructure.Services
 
         public string GenerateToken(DateTime actualDate, User user, TimeSpan validateTime)
         {
-            var expirationDate = actualDate.Add(validateTime);
+            var _expirationDate = actualDate.Add(validateTime);
             //Configuramos las claims
-            var claims = new Claim[]
+            var _claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+                new Claim(JwtRegisteredClaimNames.Name, $"{user.FirstName} {user.LastName}"),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat,
                     new DateTimeOffset(actualDate).ToUniversalTime().ToUnixTimeSeconds().ToString(),
                     ClaimValueTypes.Integer64
                 ),
-                new Claim("roles","User"),
-                new Claim("roles","Admin"),
+                new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User")
             };
 
-            //Añadimos las credenciales
-            var signingCredentials = new SigningCredentials(
+            var _signingCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetSection("Jwt:Key").Value)),
                     SecurityAlgorithms.HmacSha256Signature
-            );//luego se debe configurar para obtener estos valores, así como el issuer y audience desde el appsetings.json
-
-            //Configuracion del jwt token
-            var jwt = new JwtSecurityToken(
-                issuer: "Peticionario",
-                audience: "Public",
-                claims: claims,
-                notBefore: actualDate,
-                expires: expirationDate,
-                signingCredentials: signingCredentials
             );
 
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return encodedJwt;
+            var _Payload = new JwtPayload(
+                issuer: _configuration.GetSection("Jwt:Issuer").Value,
+                audience: _configuration.GetSection("Jwt:Audience").Value,
+                claims: _claims,
+                notBefore: DateTime.UtcNow,
+                expires: _expirationDate
+            );
+
+            var _Header = new JwtHeader(_signingCredentials);
+
+            // var jwt = new JwtSecurityToken(
+            //     issuer: _configuration.GetSection("Jwt:Issuer").Value,
+            //     audience: _configuration.GetSection("Jwt:Audience").Value,
+            //     claims: _claims,
+            //     notBefore: actualDate,
+            //     expires: _expirationDate,
+            //     signingCredentials: _signingCredentials
+            // );
+
+            // var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            // return encodedJwt;
+            var _Token = new JwtSecurityToken(
+                _Header,
+                _Payload
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(_Token);
         }
     }
 }
