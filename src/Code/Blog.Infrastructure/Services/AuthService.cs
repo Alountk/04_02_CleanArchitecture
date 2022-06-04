@@ -46,18 +46,6 @@ namespace Blog.Infrastructure.Services
             );
 
             var _Header = new JwtHeader(_signingCredentials);
-
-            // var jwt = new JwtSecurityToken(
-            //     issuer: _configuration.GetSection("Jwt:Issuer").Value,
-            //     audience: _configuration.GetSection("Jwt:Audience").Value,
-            //     claims: _claims,
-            //     notBefore: actualDate,
-            //     expires: _expirationDate,
-            //     signingCredentials: _signingCredentials
-            // );
-
-            // var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            // return encodedJwt;
             var _Token = new JwtSecurityToken(
                 _Header,
                 _Payload
