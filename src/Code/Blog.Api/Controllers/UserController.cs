@@ -57,6 +57,33 @@ namespace Blog.Api.Controllers
             await _userRepository.AddUserAsync(entitie);
             return Ok(user);
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, UserUpdateDTO user)
+        {
+            var _user = await _userRepository.GetUserByIdAsync(id);
+            if (_user == null)
+            {
+                return NotFound();
+            }
+            _user.FirstName = user.FirstName;
+            _user.LastName = user.LastName;
+            _user.Username = user.Username;
+            _user.UpdatedAt = DateTime.Now;
+
+            await _userRepository.UpdateUserAsync(_user);
+            return Ok(_user);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            var _user = await _userRepository.GetUserByIdAsync(id);
+            if (_user == null)
+            {
+                return NotFound();
+            }
+            await _userRepository.DeleteUserAsync(_user);
+            return Ok();
+        }
     }
 
 }

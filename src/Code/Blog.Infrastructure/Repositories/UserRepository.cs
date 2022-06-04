@@ -20,6 +20,7 @@ namespace Blog.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+
         public async Task<List<User>> GetAllUsersAsync()
         {
             List<User> _users = await _context.Users.ToListAsync();
@@ -36,6 +37,17 @@ namespace Blog.Infrastructure.Repositories
         {
             User? _user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             return _user;
+        }
+
+        public Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            return _context.SaveChangesAsync();
+        }
+        public Task DeleteUserAsync(User user)
+        {
+            _context.Users.Remove(user);
+            return _context.SaveChangesAsync();
         }
     }
 }
