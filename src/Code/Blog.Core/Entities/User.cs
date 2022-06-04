@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Blog.Core.Entities
+﻿namespace Blog.Core.Entities
 {
     public partial class User
     {
@@ -10,8 +7,9 @@ namespace Blog.Core.Entities
         public string? LastName { get; set; }
         public string Email { get; set; } = null!;
         public string Username { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public string PasswordSalt { get; set; } = null!;
+        // public string Password { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public byte[] PasswordHash { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsActive { get; set; }
         // public DateTime TokenCreated { get; set; }

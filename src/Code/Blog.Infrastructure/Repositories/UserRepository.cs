@@ -49,5 +49,11 @@ namespace Blog.Infrastructure.Repositories
             _context.Users.Remove(user);
             return _context.SaveChangesAsync();
         }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            User? _user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return _user;
+        }
     }
 }

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Core.Interfaces;
 using Blog.Core.Entities;
@@ -23,16 +22,32 @@ namespace Blog.Api.Controllers
             return Ok(_users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(Guid id)
+        // [HttpGet("{id}")]
+        // public async Task<IActionResult> GetUserById(Guid id)
+        // {
+        //     User _user = await _userRepository.GetUserByIdAsync(id);
+        //     if (_user == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     return Ok(_user);
+        // }
+
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
         {
-            var _user = await _userRepository.GetUserByIdAsync(id);
+            User _user = await _userRepository.GetUserByEmailAsync(email);
+            if (_user == null)
+            {
+                return NotFound();
+            }
             return Ok(_user);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddUser(UserDTO user)
         {
+            CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var userExist = await _userRepository.GetUserByUsernameAsync(user.Username);
             if (userExist != null)
             {
@@ -44,9 +59,10 @@ namespace Blog.Api.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
+                // Password = user.Password,
                 Username = user.Username,
-                Password = user.Password,
-                PasswordSalt = "blahblah",
+                PasswordSalt = passwordSalt,
+                PasswordHash = passwordHash,
                 IsAdmin = false,
                 IsActive = true,
                 RegisteredAt = DateTime.Now,
@@ -55,7 +71,8 @@ namespace Blog.Api.Controllers
             user.Id = entitie.Id;
 
             await _userRepository.AddUserAsync(entitie);
-            return Ok(user);
+            // return Ok(user);
+            return Ok(entitie);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(Guid id, UserUpdateDTO user)
@@ -83,6 +100,40 @@ namespace Blog.Api.Controllers
             }
             await _userRepository.DeleteUserAsync(_user);
             return Ok();
+        }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserLoginDTO user)
+        {
+            var _user = await _userRepository.GetUserByUsernameAsync(user.Username);
+            if (_user == null)
+            {
+                return NotFound();
+            }
+            if (!VerifyPasswordHash(user.Password, _user.PasswordHash, _user.PasswordSalt))
+            {
+                return Unauthorized();
+            }
+            return Ok(_user);
+        }
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != passwordHash[i]) return false;
+                }
+            }
+            return true;
         }
     }
 
