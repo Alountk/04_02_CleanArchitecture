@@ -19,6 +19,7 @@ namespace Blog.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+
         public async Task<List<Post>> GetAllPostsAsync()
         {
             List<Post> _posts = await _context.Posts.ToListAsync();
@@ -29,6 +30,17 @@ namespace Blog.Infrastructure.Repositories
         {
             Post? _post = await _context.Posts.FirstOrDefaultAsync(u => u.Id == postId);
             return _post;
+        }
+
+        public Task UpdatePostAsync(Post post)
+        {
+            _context.Posts.Update(post);
+            return _context.SaveChangesAsync();
+        }
+        public Task DeletePostAsync(Post post)
+        {
+            _context.Posts.Remove(post);
+            return _context.SaveChangesAsync();
         }
     }
 }
