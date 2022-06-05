@@ -32,7 +32,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPost(PostDTO post)
+        public async Task<IActionResult> CreatePost(PostDTO post)
         {
             Post entitie = new Post
             {
@@ -54,6 +54,37 @@ namespace Blog.Api.Controllers
 
             await _postRepository.AddPostAsync(entitie);
             return Ok(post);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePost(Guid id, PostUpdateDTO post)
+        {
+            var _post = await _postRepository.GetPostByIdAsync(id);
+            if (_post == null)
+            {
+                return NotFound();
+            }
+            _post.Title = post.Title;
+            _post.MetaTitle = post.MetaTitle;
+            _post.Slug = post.Slug;
+            _post.Summary = post.Summary;
+            _post.Content = post.Content;
+            _post.UpdatedAt = DateTime.Now;
+
+            await _postRepository.UpdatePostAsync(_post);
+            return Ok(post);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePost(Guid id)
+        {
+            var _post = await _postRepository.GetPostByIdAsync(id);
+            if (_post == null)
+            {
+                return NotFound();
+            }
+            await _postRepository.DeletePostAsync(_post);
+            return Ok();
         }
     }
 

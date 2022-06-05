@@ -49,7 +49,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(UserDTO user)
+        public async Task<IActionResult> CreateUser(UserDTO user)
         {
             CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var userExist = await _userRepository.GetUserByUsernameAsync(user.Username);
