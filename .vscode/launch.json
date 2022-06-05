@@ -15,11 +15,14 @@
             "cwd": "${workspaceFolder}/src/Code/Blog.Api",
             "requireExactSource": false,
             "stopAtEntry": false,
-            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-            "serverReadyAction": {
-                "__action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+            "launchBrowser": {
+                "enabled": false
             },
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            // "serverReadyAction": {
+            //     "__action": "openExternally",
+            //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+            // },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
