@@ -39,7 +39,7 @@ namespace Blog.Infrastructure.Repositories
         public async Task<PostComment?> GetCommentByIdAsync(Guid commentId)
         {
             PostComment? _comment = await _context.PostComments.FirstOrDefaultAsync(u => u.Id == commentId);
-            throw new NotImplementedException();
+            return _comment;
         }
 
         public Task UpdateCommentAsync(PostComment comment)

@@ -14,6 +14,12 @@ namespace Blog.Infrastructure.Data.Configurations
                 .HasColumnName("id")
                 .HasDefaultValueSql("uuid_generate_v4()");
 
+            builder.Property(e => e.CategoryId)
+                .HasColumnName("category_id");
+
+            builder.Property(e => e.AuthorId)
+                .HasColumnName("author_id");
+
             builder.Property(e => e.Content).HasColumnName("content");
 
             builder.Property(e => e.CreatedAt)
@@ -31,6 +37,10 @@ namespace Blog.Infrastructure.Data.Configurations
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("published_at")
                 .HasDefaultValueSql("now()");
+
+            builder.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("update_at");
 
             builder.Property(e => e.Title)
                 .HasMaxLength(100)
