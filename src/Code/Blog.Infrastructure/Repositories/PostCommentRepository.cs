@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Infrastructure.Repositories
 {
-    public class CommentRepository : ICommentRepository
+    public class PostCommentRepository : IPostCommentRepository
     {
         private readonly BlogDbContext _context;
-        public CommentRepository(BlogDbContext context)
+        public PostCommentRepository(BlogDbContext context)
         {
             _context = context;
         }

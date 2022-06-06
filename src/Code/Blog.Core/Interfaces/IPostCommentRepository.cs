@@ -2,7 +2,7 @@ using Blog.Core.Entities;
 
 namespace Blog.Core.Interfaces
 {
-    public interface ICommentRepository
+    public interface IPostCommentRepository
     {
         Task<List<PostComment?>> GetAllCommentsAsync();
         Task<List<PostComment?>> GetAllCommentsByPostIdAsync(Guid postId);
