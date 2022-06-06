@@ -20,7 +20,7 @@ namespace Blog.Infrastructure.Data
         // public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         // public virtual DbSet<PostCategory> PostCategories { get; set; } = null!;
-        // public virtual DbSet<PostComment> PostComments { get; set; } = null!;
+        public virtual DbSet<PostComment> PostComments { get; set; } = null!;
         // public virtual DbSet<PostMeta> PostMetas { get; set; } = null!;
         // public virtual DbSet<Schemaversion> Schemaversions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;

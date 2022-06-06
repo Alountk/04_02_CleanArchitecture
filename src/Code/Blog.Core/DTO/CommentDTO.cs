@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Blog.Core.Entities
+namespace Blog.Core.DTO
 {
-    public partial class PostComment
+    public class CommentDTO
     {
         public Guid Id { get; set; }
         public Guid CategoryId { get; set; }
