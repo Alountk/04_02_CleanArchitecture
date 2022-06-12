@@ -18,6 +18,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPostComments()
         {
             var _postComments = await _postCommentRepository.GetAllCommentsAsync();
@@ -25,6 +26,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPostCommentById(Guid id)
         {
             var _postComment = await _postCommentRepository.GetCommentByIdAsync(id);

@@ -18,6 +18,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPosts()
         {
             var _posts = await _postRepository.GetAllPostsAsync();
@@ -25,6 +26,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPostById(Guid id)
         {
             var _post = await _postRepository.GetPostByIdAsync(id);
