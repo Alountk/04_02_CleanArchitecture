@@ -32,5 +32,20 @@ namespace Blog.Infrastructure.Extensions.ServiceCollections
             });
             return services;
         }
+        public static IServiceCollection AddCORS(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "MyPolicy", builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+            });
+            return services;
+        }
     }
+
 }

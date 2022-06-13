@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Blog.Core.Interfaces;
 using Blog.Core.Entities;
 using Blog.Core.DTO;
@@ -20,6 +19,7 @@ namespace Blog.Api.Controllers
         }
 
         [HttpGet]
+        // [EnableCors("AllowAll")]
         public async Task<IActionResult> GetAllUsers()
         {
             var _users = await _userRepository.GetAllUsersAsync();

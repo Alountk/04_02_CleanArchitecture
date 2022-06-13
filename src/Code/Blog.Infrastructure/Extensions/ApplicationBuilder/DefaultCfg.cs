@@ -14,8 +14,10 @@ namespace Blog.Infrastructure.Extensions.ApplicationBuilder
             //     .AllowAnyHeader()
             // );
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-
+                app.UseCors("MyPolicy");
+            }
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
