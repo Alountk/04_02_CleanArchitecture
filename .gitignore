@@ -454,3 +454,10 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 appsettings.json
+
+## CERTIFICATES
+csr.pem
+https.config
+https.crt
+https.pfx
+key.pem
