@@ -40,8 +40,7 @@ namespace Blog.Infrastructure.Extensions.ServiceCollections
                     {
                         builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
+                        .AllowAnyHeader();
                     });
             });
             return services;

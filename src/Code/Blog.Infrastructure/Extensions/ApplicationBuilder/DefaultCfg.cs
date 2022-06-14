@@ -16,10 +16,10 @@ namespace Blog.Infrastructure.Extensions.ApplicationBuilder
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors("MyPolicy");
             }
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
